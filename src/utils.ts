@@ -1,5 +1,4 @@
 import type { NextRequest } from "next/server";
-import { ccTLDs, SECOND_LEVEL_DOMAINS } from "./constants";
 
 
 export const parse = (req: NextRequest) => {
@@ -13,7 +12,7 @@ export const parse = (req: NextRequest) => {
         searchParams.length > 0 ? `?${searchParams}` : ""
     }`;
 
-    const key = decodeURIComponent(path.split("/")[1] ?? ""); 
+    const key = decodeURIComponent(path.split("/")[1] ?? "");
     const fullKey = decodeURIComponent(path.slice(1));
 
     return { domain, path, fullPath, key, fullKey, searchParams };
