@@ -1,19 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with
-[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## This Repo is a minimal reproduction of the Clerk Core 2 Satellite Domain Issue
+# This repo is an example of using a subdomain to sync the active organization in Clerk
 
 ### Background
 
-Our production app running on clerk core v1 works perfectly fine with this
-setup. Since we are trying to upgrade to core v2 we are running into errors.
+- The user must have a subdomain that in their `publicMetadata`
+- The session token must be customized to include have:
+  - `{"subdomain": {{user.public_metadata.subdomain}} }`
+- The subdomain must match the slug of an org that the user is a member of. 
+- Vercel must have a wildcard subdomain set. 
 
-### My Test Setup
+### Local Dev Setup
 
-- Nextjs 15 App
-- Clerk w/ dynamic mode
-- deployed via Vercel
-- Primary Domain: devsuccess.app
-- Satellite Domains: screeno.app, devsuccess.dev 
+For local dev, I setup all requests to `*.localdev.test` to resolve to `127.0.0.1`
 
-The Nextjs App redirects the user to a satellite domain if they have a subdomain in their publicMetadata.
+- Install dnsmasq 
+- Add the proper records
+- If you don't know how to do this, google "Wildcard domain for localhost"
+- Change the `dev` command in `package.json` to use the correct host (`-H <your local domain>` )
+
+# How It Works
+- When a user signs-in (or for any request) they are redirected to the `/set/${orgSlug}` path if their current org doesn't match the subdomain in their metadata
+  - This path will set their current session active with the orgSlug (pulled from the path)
+- They are then redirected back to the `/dashboard` route.
+
+
+### WARNINGS
+
+> [!WARNING] 
+> There is no error handling present.
