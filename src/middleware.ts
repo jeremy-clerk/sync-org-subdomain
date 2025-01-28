@@ -40,6 +40,7 @@ export default clerkMiddleware(
                 : "https://"
         }${userCustomDomain ?? domain}`;
 
+        // if orgslug doesn't match our publicMetadata.subdomain redirect
         if(orgSlug !== prefix && !request.nextUrl.pathname.match(`set/${prefix}`)){
             return NextResponse.redirect(`${nextDomain}/set/${prefix}`)
         }
@@ -48,7 +49,6 @@ export default clerkMiddleware(
         if (userCustomDomain && userCustomDomain !== domain) {
             return NextResponse.redirect(`${nextDomain}${fullPath}`);
         }
-        // if orgslug doesn't match our publicMetadata.subdomain redirect
 
 
         // redirect from root to dashboard

@@ -28,3 +28,7 @@ For local dev, I setup all requests to `*.localdev.test` to resolve to `127.0.0.
 
 > [!WARNING] 
 > There is no error handling present.
+> i.e. checking for if the user is part of an org, etc. 
+
+> [!WARNING]
+> THIS IS JUST AN EXAMPLE AND NOT OFFICIALLY SUPPORTED
