@@ -6,7 +6,7 @@ Disclaimer: This code has not been thoroughly tested and is not officially suppo
 ### Background
 
 - The user must have a subdomain in their `publicMetadata`
-- The session token must be customized to include have:
+- The session token must be customized to include:
   - `{"subdomain": {{user.public_metadata.subdomain}} }`
 - The subdomain must match the slug of an org that the user is a member of. 
 - Vercel must have a wildcard subdomain set. 
