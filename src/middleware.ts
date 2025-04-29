@@ -23,7 +23,7 @@ export default clerkMiddleware(
             unauthenticatedUrl: new URL("/login", (isDev() ? `http://` : 'https://').concat(process.env.NEXT_PUBLIC_ROOT_DOMAIN as string)).toString()
         });
 
-        const { userId, redirectToSignIn, sessionClaims, orgSlug} = await auth();
+        const { userId, redirectToSignIn, sessionClaims} = await auth();
 
         if (!userId) return redirectToSignIn();
 
@@ -39,11 +39,6 @@ export default clerkMiddleware(
                 ? "http://"
                 : "https://"
         }${userCustomDomain ?? domain}`;
-
-        // if orgslug doesn't match our publicMetadata.subdomain redirect
-        if(orgSlug !== prefix && !request.nextUrl.pathname.match(`set/${prefix}`)){
-            return NextResponse.redirect(`${nextDomain}/set/${prefix}`)
-        }
 
         // if user is on wrong domain, redirect to correct domain
         if (userCustomDomain && userCustomDomain !== domain) {
